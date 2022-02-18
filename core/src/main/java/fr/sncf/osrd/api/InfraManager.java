@@ -25,7 +25,7 @@ public class InfraManager {
         infraCache.forEach(action);
     }
 
-    public static final class InfraLoadException extends Exception {
+    public static final class InfraLoadException extends RuntimeException {
         private static final long serialVersionUID = 4291184310194002894L;
 
         public final InfraStatus sourceOperation;

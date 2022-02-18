@@ -13,10 +13,16 @@ class ServiceUnavailable(APIException):
     default_code = "service_unavailable"
 
 
-class SimulationError(APIException):
+class InternalSimulationError(APIException):
     status_code = 500
-    default_detail = "A simulation error occurred"
-    default_code = "simulation_error"
+    default_detail = "An internal simulation error occurred"
+    default_code = "internal_simulation_error"
+
+
+class InvalidSimulationInput(APIException):
+    status_code = 400
+    default_detail = "The simulation had invalid inputs"
+    default_code = "simulation_invalid_input"
 
 
 def create_backend_request_payload(train_schedules: List[TrainScheduleModel]):
@@ -63,7 +69,10 @@ def run_simulation(request_payload):
         raise ServiceUnavailable("Service OSRD backend unavailable") from e
 
     if not response:
-        raise SimulationError(response.content)
+        if response.status_code == 400:
+            raise InvalidSimulationInput(response.content)
+        else:
+            raise InternalSimulationError(response.content)
     return response.json()
 
 

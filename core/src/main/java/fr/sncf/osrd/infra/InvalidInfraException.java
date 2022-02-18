@@ -1,13 +1,11 @@
 package fr.sncf.osrd.infra;
 
-public class InvalidInfraException extends Exception {
-    private static final long serialVersionUID = -9076779692113899128L;
+import fr.sncf.osrd.OSRDException;
+
+public class InvalidInfraException extends OSRDException {
+    private static final long serialVersionUID = -8946928669397353451L;
 
     public InvalidInfraException(String message) {
-        super(message);
-    }
-
-    public InvalidInfraException(String message, Throwable err) {
-        super(message, err);
+        super(invalidInfraExceptionCode, message, ErrorCause.USER);
     }
 }

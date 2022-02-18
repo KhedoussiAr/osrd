@@ -81,13 +81,7 @@ public class SimulationEndpoint implements Take {
                 return new RsWithStatus(new RsText("missing request body"), 400);
 
             // load infra
-            Infra infra;
-            try {
-                infra = infraManager.load(request.infra);
-            } catch (InfraLoadException | InterruptedException e) {
-                return new RsWithStatus(new RsText(
-                        String.format("Error loading infrastructure '%s'%n%s", request.infra, e.getMessage())), 400);
-            }
+            Infra infra = infraManager.load(request.infra);
 
             // load train schedules
             var rjsSimulation = new RJSSimulation(request.rollingStocks, request.trainSchedules,
@@ -118,8 +112,7 @@ public class SimulationEndpoint implements Take {
 
             return new RsJson(new RsWithBody(adapterResult.toJson(resultLog.result)));
         } catch (Throwable ex) {
-            ex.printStackTrace(System.err);
-            throw ex;
+            return ExceptionHandler.convertToResponse(ex);
         }
     }
 

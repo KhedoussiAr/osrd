@@ -92,13 +92,7 @@ public class PathfindingRoutesEndpoint extends PathfindingEndpoint {
             var reqWaypoints = request.waypoints;
 
             // load infra
-            Infra infra;
-            try {
-                infra = infraManager.load(request.infra);
-            } catch (InfraLoadException | InterruptedException e) {
-                return new RsWithStatus(new RsText(
-                        String.format("Error loading infrastructure '%s'%n%s", request.infra, e.getMessage())), 400);
-            }
+            Infra infra = infraManager.load(request.infra);
 
             // parse the waypoints
             var waypoints = (ArrayList<RouteLocation>[]) new ArrayList[reqWaypoints.length];
@@ -221,8 +215,7 @@ public class PathfindingRoutesEndpoint extends PathfindingEndpoint {
             }
             return new RsJson(new RsWithBody(adapterResult.toJson(res)));
         } catch (Throwable ex) {
-            ex.printStackTrace(System.err);
-            throw ex;
+            return ExceptionHandler.convertToResponse(ex);
         }
     }
 

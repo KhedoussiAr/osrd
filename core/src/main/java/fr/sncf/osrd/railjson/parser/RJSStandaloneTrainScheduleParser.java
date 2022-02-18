@@ -38,8 +38,8 @@ public class RJSStandaloneTrainScheduleParser {
         // parse allowances
         var allowances = new ArrayList<MarecoAllowance>();
         if (rjsTrainSchedule.allowances != null)
-            for (var rjsAllowance : rjsTrainSchedule.allowances)
-                allowances.add(parseAllowance(timeStep, rollingStock, envelopePath, rjsAllowance));
+            for (int i = 0; i < rjsTrainSchedule.allowances.length; i++)
+                allowances.add(parseAllowance(timeStep, rollingStock, envelopePath, rjsTrainSchedule.allowances[i], i));
 
         return new StandaloneTrainSchedule(rollingStock, initialSpeed, stops, allowances);
     }
@@ -55,7 +55,8 @@ public class RJSStandaloneTrainScheduleParser {
             double timeStep,
             RollingStock rollingStock,
             EnvelopePath envelopePath,
-            RJSAllowance rjsAllowance
+            RJSAllowance rjsAllowance,
+            int allowanceIndex
     ) throws InvalidSchedule {
         if (rjsAllowance.getClass() == RJSAllowance.Construction.class) {
             var rjsConstruction = (RJSAllowance.Construction) rjsAllowance;
@@ -67,8 +68,8 @@ public class RJSStandaloneTrainScheduleParser {
                     new EnvelopeSimContext(rollingStock, envelopePath, timeStep),
                     rjsConstruction.beginPosition, rjsConstruction.endPosition,
                     getPositiveDoubleOrDefault(rjsConstruction.capacitySpeedLimit, 30 / 3.6),
-                    parseAllowanceValue(rjsConstruction.value)
-            );
+                    parseAllowanceValue(rjsConstruction.value),
+                    allowanceIndex);
         }
         if (rjsAllowance.getClass() == RJSAllowance.Mareco.class) {
             var rjsMareco = (RJSAllowance.Mareco) rjsAllowance;
@@ -80,8 +81,8 @@ public class RJSStandaloneTrainScheduleParser {
                     new EnvelopeSimContext(rollingStock, envelopePath, timeStep),
                     0, envelopePath.getLength(),
                     getPositiveDoubleOrDefault(rjsMareco.capacitySpeedLimit, 30 / 3.6),
-                    parseAllowanceValue(rjsMareco.defaultValue)
-            );
+                    parseAllowanceValue(rjsMareco.defaultValue),
+                    allowanceIndex);
         }
 
         throw new RuntimeException("unknown allowance type");

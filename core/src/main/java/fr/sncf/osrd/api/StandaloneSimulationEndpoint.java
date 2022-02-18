@@ -6,7 +6,6 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import fr.sncf.osrd.api.InfraManager.InfraLoadException;
 import fr.sncf.osrd.envelope.Envelope;
 import fr.sncf.osrd.envelope_sim.EnvelopePath;
 import fr.sncf.osrd.envelope_sim.EnvelopeSimContext;
@@ -67,8 +66,7 @@ public class StandaloneSimulationEndpoint implements Take {
             InvalidRollingStock,
             InvalidSchedule,
             InvalidSuccession,
-            SimulationError,
-            InvalidInfraException {
+            SimulationError {
         try {
             // Parse request input
             var body = new RqPrint(req).printBody();
@@ -77,13 +75,7 @@ public class StandaloneSimulationEndpoint implements Take {
                 return new RsWithStatus(new RsText("missing request body"), 400);
 
             // load infra
-            Infra infra;
-            try {
-                infra = infraManager.load(request.infra);
-            } catch (InfraLoadException | InterruptedException e) {
-                return new RsWithStatus(new RsText(
-                        String.format("Error loading infrastructure '%s'%n%s", request.infra, e.getMessage())), 400);
-            }
+            Infra infra = infraManager.load(request.infra);
 
             // Parse rolling stocks
             var rollingStocks = new HashMap<String, RollingStock>();
@@ -131,8 +123,7 @@ public class StandaloneSimulationEndpoint implements Take {
 
             return new RsJson(new RsWithBody(adapterResult.toJson(result)));
         } catch (Throwable ex) {
-            ex.printStackTrace(System.err);
-            throw ex;
+            return ExceptionHandler.convertToResponse(ex);
         }
     }
 

@@ -14,6 +14,7 @@ import fr.sncf.osrd.envelope_sim.overlays.EnvelopeCoasting;
 import fr.sncf.osrd.envelope_sim.pipelines.MaxEffortEnvelope;
 import fr.sncf.osrd.envelope_sim.TrainPhysicsIntegrator;
 import fr.sncf.osrd.envelope_sim.StopMeta;
+import fr.sncf.osrd.envelope_sim.allowances.mareco_impl.MarecoConvergenceException;
 import fr.sncf.osrd.utils.DoubleBinarySearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,19 +34,22 @@ public class MarecoAllowance implements Allowance {
     // potential speed limit under which the train would use too much capacity
     public final double capacitySpeedLimit;
 
+    public final int allowanceIndex;
+
     /** Constructor */
     public MarecoAllowance(
             EnvelopeSimContext context,
             double begin,
             double end,
             double capacitySpeedLimit,
-            AllowanceValue allowanceValue
-    ) {
+            AllowanceValue allowanceValue,
+            int allowanceIndex) {
         this.context = context;
         this.sectionBegin = begin;
         this.sectionEnd = end;
         this.capacitySpeedLimit = capacitySpeedLimit;
         this.allowanceValue = allowanceValue;
+        this.allowanceIndex = allowanceIndex;
     }
 
     private static class AcceleratingSlope {
@@ -498,19 +502,17 @@ public class MarecoAllowance implements Allowance {
             search.feedback(output);
         }
         if (!search.complete())
-            throw makeMarecoError(search);
+            throwMarecoError(search);
 
         return curEnvelope;
     }
 
-    private static RuntimeException makeMarecoError(DoubleBinarySearch search) {
-        String error;
+    private void throwMarecoError(DoubleBinarySearch search) {
         if (!search.hasRaisedLowBound())
-            error = "we can't lose the requested time in this setting";
+            throw MarecoConvergenceException.tooMuchTime(this);
         else if (!search.hasLoweredHighBound())
-            error = "we can't go fast enough in this setting"; // Should not happen in normal settings
+            throw MarecoConvergenceException.notEnoughTime(this);
         else
-            error = "discontinuity in the search space"; // Should not happen in normal settings
-        return new RuntimeException(String.format("Mareco simulation did not converge (%s)", error));
+            throw MarecoConvergenceException.discontinuity(this);
     }
 }
