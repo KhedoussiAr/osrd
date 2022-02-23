@@ -38,7 +38,7 @@ switches AS (
 	WHERE x.infra_id = infra.id
 ),
 track_sections AS (
-	SELECT coalesce(json_agg(x.data - 'geo' - 'sch'), '[]'::json) AS railjson
+	SELECT coalesce(json_agg(x.data), '[]'::json) AS railjson
 	FROM (
 			SELECT *
 			FROM public.osrd_infra_tracksectionmodel
