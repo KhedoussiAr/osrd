@@ -8,6 +8,7 @@ import fr.sncf.osrd.railjson.schema.common.RJSObjectRef;
 import fr.sncf.osrd.railjson.schema.infra.trackranges.RJSSlope;
 import fr.sncf.osrd.railjson.schema.infra.trackranges.RJSCurve;
 import fr.sncf.osrd.railjson.schema.infra.trackranges.RJSSpeedSection;
+import fr.sncf.osrd.utils.geom.LineString;
 import fr.sncf.osrd.utils.graph.EdgeEndpoint;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class RJSTrackSection implements Identified {
     @Json(name = "speed_sections")
     public List<RJSSpeedSection> speedSections;
 
-    public GeoData sch;
+    public LineString geo;
+    public LineString sch;
 
     @Override
     public String getID() {

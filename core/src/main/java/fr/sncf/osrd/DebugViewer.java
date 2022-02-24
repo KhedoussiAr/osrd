@@ -133,15 +133,13 @@ public class DebugViewer extends ChangeConsumer {
             graphEdge.setAttribute("ui.label", edge.id + "(index = " + edge.index + ")");
             graphEdge.setAttribute("layout.weight", edge.length / referenceEdgeSize);
 
-            if (edge.endpointCoords != null) {
+            if (edge.sch != null) {
                 viewer.useGeographicCoord = true;
-                assert edge.endpointCoords.size() == 2;
-                assert edge.endpointCoords.get(0).size() == 2;
-                assert edge.endpointCoords.get(1).size() == 2;
-                graph.getNode(startId).setAttribute("x", edge.endpointCoords.get(0).get(0));
-                graph.getNode(startId).setAttribute("y", edge.endpointCoords.get(0).get(1));
-                graph.getNode(endId).setAttribute("x", edge.endpointCoords.get(1).get(0));
-                graph.getNode(endId).setAttribute("y", edge.endpointCoords.get(1).get(1));
+                var points = edge.sch.getPoints();
+                graph.getNode(startId).setAttribute("x", points.get(0).x);
+                graph.getNode(startId).setAttribute("y", points.get(0).y);
+                graph.getNode(endId).setAttribute("x", points.get(points.size() - 1).x);
+                graph.getNode(endId).setAttribute("y", points.get(points.size() - 1).y);
             }
 
             edge.operationalPoints.forEach((opRef) -> {

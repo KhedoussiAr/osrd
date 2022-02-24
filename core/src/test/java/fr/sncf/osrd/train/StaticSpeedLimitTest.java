@@ -52,7 +52,7 @@ public class StaticSpeedLimitTest {
         var nodeA = trackGraph.makePlaceholderNode("A");
         var nodeB = trackGraph.makePlaceholderNode("B");
         var edgeLength = 10000.0;
-        var edge = trackGraph.makeTrackSection(nodeA.index, nodeB.index, "e1", edgeLength, null);
+        var edge = trackGraph.makeTrackSection(nodeA.index, nodeB.index, "e1", edgeLength);
         var waypointsBuilder = edge.waypoints.builder();
         var bufferStopA = new BufferStop(0, "BufferStopA");
         waypointsBuilder.add(0, bufferStopA);
