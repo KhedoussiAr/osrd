@@ -22,7 +22,6 @@ import java.util.List;
  */
 public final class TrackSection extends BiNEdge<TrackSection> {
     public final String id;
-
     public final LineString geo;
     public final LineString sch;
 
