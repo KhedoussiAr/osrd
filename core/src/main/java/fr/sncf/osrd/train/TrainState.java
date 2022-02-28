@@ -3,7 +3,10 @@ package fr.sncf.osrd.train;
 import static fr.sncf.osrd.simulation.Simulation.timeStep;
 
 import java.util.*;
+import fr.sncf.osrd.OSRDException;
 import fr.sncf.osrd.simulation.*;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.TrainError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -260,7 +263,8 @@ public final class TrainState implements Cloneable, DeepComparable<TrainState> {
 
         for (int i = 0; location.getPathPosition() < goalPathPosition; i++) {
             if (i >= 10000 / timeStep)
-                throw new SimulationError("train physics numerical integration doesn't seem to stop");
+                throw new TrainError("train physics numerical integration doesn't seem to stop", sim.getTime(),
+                        trainSchedule.trainID, null, OSRDException.ErrorCause.INTERNAL);
             var distanceStep = goalPathPosition - location.getPathPosition();
             step(locationChange, timeStep, distanceStep);
             // Stop the evolution if the train has stopped

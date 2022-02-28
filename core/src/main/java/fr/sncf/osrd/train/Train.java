@@ -4,12 +4,15 @@ import static fr.sncf.osrd.infra.signaling.AspectConstraint.ConstraintPosition.E
 import static java.lang.Math.min;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import fr.sncf.osrd.OSRDException;
 import fr.sncf.osrd.infra.StopActionPoint;
 import fr.sncf.osrd.infra.signaling.AspectConstraint;
 import fr.sncf.osrd.infra.signaling.Signal;
 import fr.sncf.osrd.infra.trackgraph.Detector;
 import fr.sncf.osrd.infra_state.SignalState;
 import fr.sncf.osrd.simulation.*;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.TrainError;
 import fr.sncf.osrd.speedcontroller.SpeedController;
 import fr.sncf.osrd.speedcontroller.SpeedDirective;
 import fr.sncf.osrd.train.events.TrainCreatedEvent;
@@ -183,14 +186,15 @@ public class Train {
                 lastState.setAspectConstraints(signalState);
                 break;
             case HEAD:
-                onTrainReachSignal(signalState);
+                onTrainReachSignal(sim, signalState);
                 break;
             default:
-                throw new RuntimeException("Unexpected signal interaction type");
+                throw new TrainError("Unexpected signal interaction type",
+                        sim.getTime(), getID(), null, OSRDException.ErrorCause.INTERNAL);
         }
     }
 
-    private void onTrainReachSignal(SignalState signalState) throws SimulationError {
+    private void onTrainReachSignal(Simulation sim, SignalState signalState) throws SimulationError {
         for (var aspect : signalState.aspects) {
             for (var constraint : aspect.constraints) {
                 if (constraint.getClass() != AspectConstraint.SpeedLimit.class)
@@ -201,8 +205,8 @@ public class Train {
                 if (speedLimit.until.element.equals(CURRENT_SIGNAL) && speedLimit.until.offset < 0)
                     continue;
                 if (speedLimit.speed <= 0)
-                    throw new SimulationError(String.format("Train %s has reached a blocking signal %s",
-                            schedule.trainID, signalState.signal.id));
+                    throw new TrainError("train has reached a blocking signal",
+                             sim.getTime(), schedule.trainID, signalState.signal.id, OSRDException.ErrorCause.USER);
             }
         }
 

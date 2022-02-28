@@ -1,12 +1,12 @@
 package fr.sncf.osrd.railjson.parser.exceptions;
 
 public class UnknownRoute extends InvalidSchedule {
-    static final long serialVersionUID = -986192323545717567L;
+    private static final long serialVersionUID = 8037955751356257543L;
 
     public final String routeID;
 
     public UnknownRoute(String message, String routeID) {
-        super(message);
+        super(unknownRouteCode, message);
         this.routeID = routeID;
     }
 }

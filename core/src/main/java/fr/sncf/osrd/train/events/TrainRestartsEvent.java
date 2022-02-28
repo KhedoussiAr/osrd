@@ -2,7 +2,8 @@ package fr.sncf.osrd.train.events;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.CancellationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.TimelineEvent;
 import fr.sncf.osrd.simulation.TimelineEventId;
 import fr.sncf.osrd.train.Train;
@@ -28,7 +29,7 @@ public final class TrainRestartsEvent extends TimelineEvent {
 
     @Override
     protected void onCancellation(Simulation sim) throws SimulationError {
-        throw new SimulationError("cancellation of TrainChangedState not supported yet");
+        throw new CancellationError("cancellation of TrainChangedState not supported yet", sim.getTime());
     }
 
     /** Plan a move to an action point */

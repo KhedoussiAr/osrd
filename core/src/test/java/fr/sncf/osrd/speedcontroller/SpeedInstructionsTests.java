@@ -9,7 +9,7 @@ import fr.sncf.osrd.railjson.parser.RailJSONParser;
 import fr.sncf.osrd.railjson.schema.schedule.RJSTrainSchedule;
 import fr.sncf.osrd.railjson.schema.schedule.RJSTrainStop;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.TrainSchedule;
 import fr.sncf.osrd.infra.InvalidInfraException;
 import fr.sncf.osrd.speedcontroller.generators.SpeedControllerGenerator;

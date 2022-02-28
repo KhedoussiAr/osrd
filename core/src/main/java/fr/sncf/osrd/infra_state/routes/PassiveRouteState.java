@@ -3,12 +3,14 @@ package fr.sncf.osrd.infra_state.routes;
 import static fr.sncf.osrd.infra_state.routes.RouteStatus.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import fr.sncf.osrd.OSRDException;
 import fr.sncf.osrd.infra.TVDSection;
 import fr.sncf.osrd.infra.railscript.value.RSValue;
 import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra_state.TVDSectionState;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.RouteError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.TrainState;
 
 public class PassiveRouteState extends RouteState {
@@ -42,7 +44,8 @@ public class PassiveRouteState extends RouteState {
 
     @Override
     public void onSwitchMove(Simulation sim) throws SimulationError {
-        throw new SimulationError(String.format("Switch move on a passive route (route: %s)", route.id));
+        throw new RouteError("Switch move on a passive route",
+                sim.getTime(), route.id, null, OSRDException.ErrorCause.USER);
     }
 
     @Override

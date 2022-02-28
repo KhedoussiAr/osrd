@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import fr.sncf.osrd.TestConfig;
 import fr.sncf.osrd.railjson.schema.successiontable.RJSTrainSuccessionTable;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.train.Train;
 import fr.sncf.osrd.infra_state.routes.RouteState;
 import fr.sncf.osrd.infra_state.routes.RouteStatus;
 import org.junit.jupiter.api.Disabled;
@@ -21,7 +20,7 @@ import fr.sncf.osrd.railjson.schema.common.ID;
 import fr.sncf.osrd.railjson.schema.infra.RJSRoute;
 import fr.sncf.osrd.railjson.schema.infra.RJSSwitch;
 import fr.sncf.osrd.railjson.schema.infra.RJSSwitchType;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.changelog.ArrayChangeLog;
 
 public class RouteStateTest {

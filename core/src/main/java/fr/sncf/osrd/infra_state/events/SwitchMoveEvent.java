@@ -4,7 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.infra_state.routes.RouteState;
 import fr.sncf.osrd.infra_state.SwitchState;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.CancellationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.TimelineEvent;
 import fr.sncf.osrd.simulation.TimelineEventId;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class SwitchMoveEvent extends TimelineEvent {
 
     @Override
     protected void onCancellation(Simulation sim) throws SimulationError {
-        throw new SimulationError("cancelling a switch move isn't supported");
+        throw new CancellationError("cancelling a switch move isn't supported", sim.getTime());
     }
 
     @Override

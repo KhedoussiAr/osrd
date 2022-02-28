@@ -10,7 +10,7 @@ import fr.sncf.osrd.railjson.parser.exceptions.InvalidRollingStock;
 import fr.sncf.osrd.railjson.parser.exceptions.InvalidSchedule;
 import fr.sncf.osrd.railjson.parser.exceptions.InvalidSuccession;
 import fr.sncf.osrd.railjson.schema.schedule.*;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.utils.graph.EdgeDirection;
 import org.junit.jupiter.api.Test;
 import org.takes.rq.RqFake;

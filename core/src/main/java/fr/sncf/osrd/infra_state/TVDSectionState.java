@@ -4,7 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.infra.TVDSection;
 import fr.sncf.osrd.simulation.EntityChange;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.TVDError;
 import fr.sncf.osrd.utils.DeepComparable;
 
 @SuppressFBWarnings({"URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"})
@@ -60,7 +61,8 @@ public class TVDSectionState implements DeepComparable<TVDSectionState> {
      */
     public void occupy(Simulation sim) throws SimulationError {
         if (isOccupied)
-            throw new SimulationError("TVD section we try to occupy is already occupied");
+            throw new TVDError("TVD section we try to occupy is already occupied",
+                    tvdSection.id, sim.getTime());
         var change = new TVDSectionOccupationChange(sim, this, true);
         change.apply(sim, this);
         sim.publishChange(change);

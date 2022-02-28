@@ -1,6 +1,8 @@
 package fr.sncf.osrd.simulation;
 
 import fr.sncf.osrd.simulation.changelog.ChangeConsumer;
+import fr.sncf.osrd.simulation.exceptions.ChangeError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class ChangeStateChecker extends ChangeConsumer {
         }
 
         if (count != 0)
-            throw new SimulationError(String.format("%d changes were not published", count));
+            throw new ChangeError(String.format("%d changes were not published", count));
     }
 
     @Override

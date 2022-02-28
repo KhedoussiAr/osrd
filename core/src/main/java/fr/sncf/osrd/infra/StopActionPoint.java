@@ -2,6 +2,7 @@ package fr.sncf.osrd.infra;
 
 import fr.sncf.osrd.infra.signaling.ActionPoint;
 import fr.sncf.osrd.simulation.*;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.InteractionType;
 import fr.sncf.osrd.train.InteractionTypeSet;
 import fr.sncf.osrd.train.Train;

@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.infra.*;
-import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra.routegraph.RouteGraph;
 import fr.sncf.osrd.infra.trackgraph.BufferStop;
 import fr.sncf.osrd.infra.trackgraph.TrackGraph;
 import fr.sncf.osrd.railjson.parser.exceptions.InvalidSchedule;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.changelog.ArrayChangeLog;
 import fr.sncf.osrd.speedcontroller.SpeedInstructions;
 import fr.sncf.osrd.train.events.TrainCreatedEvent;

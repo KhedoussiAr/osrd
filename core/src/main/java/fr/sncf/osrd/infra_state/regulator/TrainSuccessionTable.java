@@ -2,7 +2,8 @@ package fr.sncf.osrd.infra_state.regulator;
 
 import fr.sncf.osrd.simulation.EntityChange;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.TSTError;
 import java.util.ArrayDeque;
 import java.util.List;
 
@@ -51,8 +52,7 @@ public class TrainSuccessionTable {
         List<String> trainLog = sim.infraState.towerState.trainSuccessionLog.get(switchID);
         for (var newTrain : newTrainOrder) {
             if (trainLog.contains(newTrain))
-                throw new SimulationError(String.format(
-                        "Can't change TST: Train '%s' was already approved by the tower state", newTrain));
+                throw new TSTError("train was already approved by the tower state", sim.getTime(), newTrain);
         }
 
         // Change train order

@@ -15,7 +15,7 @@ import fr.sncf.osrd.infra_state.SignalState;
 import fr.sncf.osrd.infra_state.SwitchState;
 import fr.sncf.osrd.railjson.parser.RailScriptExprParser;
 import fr.sncf.osrd.railjson.schema.infra.railscript.RJSRSExpr.*;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.lifecycle.AfterTry;

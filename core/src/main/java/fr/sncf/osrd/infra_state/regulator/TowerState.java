@@ -1,11 +1,14 @@
 package fr.sncf.osrd.infra_state.regulator;
 
+import static fr.sncf.osrd.OSRDException.ErrorCause.INTERNAL;
+
 import fr.sncf.osrd.infra.TVDSection;
 import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra_state.routes.RouteStatus;
 import fr.sncf.osrd.simulation.EntityChange;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.RouteError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.infra.Infra;
 import java.util.*;
 
@@ -74,7 +77,8 @@ public class TowerState {
     /** Request a route reservation and return whether it was approved */
     public boolean request(Simulation sim, Request request) throws SimulationError {
         if (request.getRouteState(sim).route.switchesGroup.isEmpty())
-            throw new SimulationError("Can't request reservation cause the route does not contain any switch");
+            throw new RouteError("Can't request reservation cause the route does not contain any switch",
+                    sim.getTime(), request.getRouteState(sim).route.id, request.trainID, INTERNAL);
         if (requestIsApprovable(sim, request)) {
             approveRequest(sim, request);
             return true;

@@ -1,7 +1,7 @@
 package fr.sncf.osrd.speedcontroller;
 
 import fr.sncf.osrd.railjson.schema.schedule.RJSLegacyAllowance;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.speedcontroller.generators.MarecoAllowanceGenerator;
 import fr.sncf.osrd.train.TrainSchedule;
 import fr.sncf.osrd.simulation.Simulation;

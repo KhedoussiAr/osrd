@@ -1,5 +1,6 @@
 package fr.sncf.osrd.simulation;
 
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.utils.DeepComparable;
 
 public abstract class TimelineEvent implements DeepComparable<TimelineEvent> {

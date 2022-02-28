@@ -5,7 +5,7 @@ import static java.lang.Math.abs;
 import static java.util.Collections.max;
 
 import fr.sncf.osrd.railjson.schema.schedule.RJSLegacyAllowance.MarginType;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.RollingStock;
 import fr.sncf.osrd.speedcontroller.*;
 import fr.sncf.osrd.train.TrainSchedule;

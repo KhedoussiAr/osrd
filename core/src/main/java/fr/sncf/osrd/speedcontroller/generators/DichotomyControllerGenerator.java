@@ -3,7 +3,7 @@ package fr.sncf.osrd.speedcontroller.generators;
 
 import fr.sncf.osrd.railjson.schema.schedule.RJSLegacyAllowance.MarginType;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.speedcontroller.SpeedController;
 import fr.sncf.osrd.train.TrainSchedule;
 import fr.sncf.osrd.utils.SortedDoubleMap;

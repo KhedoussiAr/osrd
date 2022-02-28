@@ -19,7 +19,7 @@ import fr.sncf.osrd.railjson.schema.schedule.RJSTrainSchedule;
 import fr.sncf.osrd.railjson.schema.schedule.RJSVirtualPoint;
 import fr.sncf.osrd.railjson.schema.successiontable.RJSTrainSuccessionTable;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumer;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumerMultiplexer;
 import fr.sncf.osrd.train.RollingStock;

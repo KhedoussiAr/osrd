@@ -8,7 +8,7 @@ import fr.sncf.osrd.infra_state.events.SwitchMoveEvent;
 import fr.sncf.osrd.infra_state.routes.RouteState;
 import fr.sncf.osrd.simulation.EntityChange;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.utils.graph.EdgeDirection;
 import fr.sncf.osrd.utils.graph.EdgeEndpoint;
 

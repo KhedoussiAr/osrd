@@ -3,14 +3,16 @@ package fr.sncf.osrd.infra_state.routes;
 import static fr.sncf.osrd.infra_state.routes.RouteStatus.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import fr.sncf.osrd.cbtc.CBTCNavigatePhase;
+import fr.sncf.osrd.OSRDException;
 import fr.sncf.osrd.infra.TVDSection;
 import fr.sncf.osrd.infra.railscript.value.RSValue;
 import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra_state.TVDSectionState;
 import fr.sncf.osrd.infra_state.regulator.Request;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.RouteError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.TVDError;
 import fr.sncf.osrd.train.TrainState;
 import fr.sncf.osrd.utils.SortedArraySet;
 
@@ -62,7 +64,8 @@ public class ControlledRouteState extends RouteState {
     public void onTvdSectionOccupied(Simulation sim, TVDSection tvdSection) throws SimulationError {
 
         if (status == REQUESTED || status == FREE) {
-            throw new SimulationError("The TVD section we try to occupy isn't reserved yet");
+            throw new TVDError("The TVD section we try to occupy isn't reserved yet",
+                    tvdSection.id, sim.getTime());
         }
         if (status != RouteStatus.RESERVED)
             return;
@@ -110,7 +113,8 @@ public class ControlledRouteState extends RouteState {
     @Override
     protected void reserveWithGivenCBTC(Simulation sim, boolean cbtc) throws SimulationError {
         if (!(status == FREE || (cbtc && hasCBTCStatus())))
-            throw new SimulationError("The route we try to reserve isn't free");
+            throw new RouteError("The route we try to reserve isn't free", sim.getTime(),
+                    route.id, null, OSRDException.ErrorCause.INTERNAL);
 
         if (isCBTCReserved != cbtc) {
             var change = new RouteCBTCChange(sim, this, cbtc);
@@ -146,8 +150,8 @@ public class ControlledRouteState extends RouteState {
         // Reserve route via tower state (if denied then throw an error)
         var request = new Request(sim.trains.get(trainState.trainSchedule.trainID), this);
         if (!sim.infraState.towerState.request(sim, request))
-            throw new SimulationError(
-                    String.format("Initial route reservation: TowerState denied request for route '%s'", route.id));
+            throw new RouteError("Initial route reservation: TowerState denied request for route",
+                    sim.getTime(), route.id, trainState.trainSchedule.trainID, OSRDException.ErrorCause.USER);
     }
 
     /** Should be called when a switch is done moving and is in the position we requested */
@@ -157,7 +161,8 @@ public class ControlledRouteState extends RouteState {
         // If all switches are in the requested position, we mark the route as reserved
         if (movingSwitchesLeft == 0) {
             if (status != RouteStatus.REQUESTED) {
-                throw new SimulationError("The Route needs to be REQUESTED if a switch moves");
+                throw new RouteError("The Route needs to be REQUESTED if a switch moves",
+                        sim.getTime(), route.id, null, OSRDException.ErrorCause.INTERNAL);
             }
             updateStatus(sim, RESERVED);
         }

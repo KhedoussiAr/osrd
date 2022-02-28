@@ -1,9 +1,15 @@
 package fr.sncf.osrd.railjson.parser.exceptions;
 
-public class InvalidSchedule extends Exception {
-    static final long serialVersionUID = 1068679247089983594L;
+import fr.sncf.osrd.OSRDException;
+
+public class InvalidSchedule extends OSRDException {
+    private static final long serialVersionUID = 1166970317776716683L;
 
     public InvalidSchedule(String message) {
-        super(message);
+        super(invalidScheduleCode, message, ErrorCause.USER);
+    }
+
+    protected InvalidSchedule(String code, String message) {
+        super(code, message, ErrorCause.USER);
     }
 }

@@ -7,9 +7,9 @@ import fr.sncf.osrd.TestConfig;
 import fr.sncf.osrd.railjson.schema.common.ID;
 import fr.sncf.osrd.railjson.schema.infra.railscript.RJSRSExpr;
 import fr.sncf.osrd.railjson.schema.schedule.RJSTrainSchedule;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.RouteError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import org.junit.jupiter.api.Test;
-import java.util.Optional;
 
 public class ReservationsTests {
 
@@ -53,7 +53,6 @@ public class ReservationsTests {
                 null
         ));
         var prepared = config.prepare();
-        var error = assertThrows(SimulationError.class, prepared::runWithExceptions);
-        assertTrue(error.getMessage().contains("Impossible to reserve"));
+        assertThrows(RouteError.class, prepared::runWithExceptions);
     }
 }

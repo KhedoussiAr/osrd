@@ -24,7 +24,7 @@ import fr.sncf.osrd.railjson.schema.common.ID;
 import fr.sncf.osrd.railjson.schema.rollingstock.RJSRollingResistance;
 import fr.sncf.osrd.railjson.schema.rollingstock.RJSRollingStock;
 import fr.sncf.osrd.railjson.schema.schedule.*;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.*;
 import fr.sncf.osrd.utils.CurveSimplification;
 import org.takes.Request;

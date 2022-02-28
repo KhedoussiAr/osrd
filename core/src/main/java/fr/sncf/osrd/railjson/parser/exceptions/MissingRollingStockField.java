@@ -1,16 +1,12 @@
 package fr.sncf.osrd.railjson.parser.exceptions;
 
 public final class MissingRollingStockField extends InvalidRollingStock {
-    static final long serialVersionUID = -1642047451113737984L;
+    private static final long serialVersionUID = 5412511233874626059L;
 
     public final String fieldName;
 
     public MissingRollingStockField(String fieldName) {
+        super(missingRollingStockFieldCode, String.format("missing field {%s}", fieldName));
         this.fieldName = fieldName;
-    }
-
-    @Override
-    public String getMessage() {
-        return String.format("MissingRollingStockField exception: missing field {%s}", fieldName);
     }
 }

@@ -5,6 +5,7 @@ import fr.sncf.osrd.infra.Infra;
 import fr.sncf.osrd.infra_state.regulator.TrainSuccessionTable;
 import fr.sncf.osrd.infra_state.InfraState;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumer;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.Train;
 import fr.sncf.osrd.utils.DeepComparable;
 import org.slf4j.Logger;

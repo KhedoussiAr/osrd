@@ -4,7 +4,7 @@ import static fr.sncf.osrd.train.TrainPhysicsIntegrator.*;
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
 
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.train.IntegrationStep;
 import fr.sncf.osrd.train.*;
 import fr.sncf.osrd.simulation.Simulation;

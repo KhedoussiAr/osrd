@@ -1,11 +1,13 @@
 package fr.sncf.osrd.train;
 
+import fr.sncf.osrd.OSRDException;
 import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra.TVDSectionPath;
 import fr.sncf.osrd.infra_state.regulator.Request;
 import fr.sncf.osrd.infra_state.routes.RouteStatus;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.RouteError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.utils.TrackSectionLocation;
 
 public class ActivateRoute {
@@ -56,8 +58,8 @@ public class ActivateRoute {
 
         // Reserve the initial route
         if (routeState.status != RouteStatus.FREE)
-            throw new SimulationError(String.format(
-                    "Impossible to reserve the route '%s' since it is not available.", routeState.route.id));
+            throw new RouteError("initial route isn't free", sim.getTime(),
+                    routeState.route.id, trainState.trainSchedule.trainID, OSRDException.ErrorCause.USER);
         routeState.initialReserve(sim, trainState);
 
         // Reserve the tvdSection where the train is created

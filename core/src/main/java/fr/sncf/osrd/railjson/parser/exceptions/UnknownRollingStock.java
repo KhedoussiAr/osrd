@@ -1,12 +1,12 @@
 package fr.sncf.osrd.railjson.parser.exceptions;
 
 public class UnknownRollingStock extends InvalidSchedule {
-    static final long serialVersionUID = -4584084079930478390L;
+    private static final long serialVersionUID = 7255918937277778058L;
 
     public final String rollingStockID;
 
     public UnknownRollingStock(String rollingStockID) {
-        super("unknown rolling stock");
+        super(unknownRollingStockCode, "unknown rolling stock");
         this.rollingStockID = rollingStockID;
     }
 }

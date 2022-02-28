@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumerMultiplexer;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;

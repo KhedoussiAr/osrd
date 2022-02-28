@@ -7,7 +7,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import fr.sncf.osrd.infra.StopActionPoint.RestartTrainEvent.RestartTrainPlanned;
 import fr.sncf.osrd.railjson.schema.schedule.RJSLegacyAllowance;
 import fr.sncf.osrd.train.TrainSchedule;
-import fr.sncf.osrd.api.InfraManager.InfraLoadException;
 import fr.sncf.osrd.infra.Infra;
 import fr.sncf.osrd.infra.routegraph.Route;
 import fr.sncf.osrd.infra_state.routes.RouteState;
@@ -27,7 +26,7 @@ import fr.sncf.osrd.railjson.schema.schedule.RJSTrainSchedule;
 import fr.sncf.osrd.railjson.schema.successiontable.RJSTrainSuccessionTable;
 import fr.sncf.osrd.simulation.Change;
 import fr.sncf.osrd.simulation.Simulation;
-import fr.sncf.osrd.simulation.SimulationError;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumer;
 import fr.sncf.osrd.simulation.changelog.ChangeConsumerMultiplexer;
 import fr.sncf.osrd.train.Train;
@@ -184,7 +183,7 @@ public class SimulationEndpoint implements Take {
         }
 
         /** Ensures that the results are valid, throws a SimulationError otherwise */
-        public void validate() throws SimulationError {
+        public void validate() {
             for (var trainName : result.trains.keySet()) {
                 var trainResult = result.trains.get(trainName);
                 var nStopReached = trainResult.stopReaches.size();
@@ -193,7 +192,7 @@ public class SimulationEndpoint implements Take {
                 if (nStopReached != expectedStopReached) {
                     var err = String.format("Train '%s', unexpected stop number: expected %d, got %d",
                             trainName, expectedStopReached, nStopReached);
-                    throw new SimulationError(err);
+                    throw new RuntimeException(err);
                 }
             }
         }

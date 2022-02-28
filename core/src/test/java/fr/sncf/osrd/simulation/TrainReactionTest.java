@@ -7,6 +7,7 @@ import fr.sncf.osrd.TestConfig;
 import fr.sncf.osrd.infra_state.SwitchState;
 import fr.sncf.osrd.railjson.schema.common.ID;
 import fr.sncf.osrd.railjson.schema.infra.railscript.RJSRSExpr;
+import fr.sncf.osrd.simulation.exceptions.SimulationError;
 import org.junit.jupiter.api.Test;
 
 
