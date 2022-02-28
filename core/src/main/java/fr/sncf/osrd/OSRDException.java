@@ -10,10 +10,7 @@ import fr.sncf.osrd.simulation.exceptions.*;
 
 public abstract class OSRDException extends RuntimeException {
 
-    private static final long serialVersionUID = -9118373267160307119L;
-
-    /** Error code identifier, format `module:submodule:type` */
-    public final String type;
+    private static final long serialVersionUID = 1197516372515951853L;
 
     /** Detailed error message */
     public final String message;
@@ -50,8 +47,7 @@ public abstract class OSRDException extends RuntimeException {
     protected static final String changeCode = simulationErrorCode + ":change";
 
 
-    protected OSRDException(String type, String message, ErrorCause cause) {
-        this.type = type;
+    protected OSRDException(String message, ErrorCause cause) {
         this.message = message;
         this.cause = cause;
     }

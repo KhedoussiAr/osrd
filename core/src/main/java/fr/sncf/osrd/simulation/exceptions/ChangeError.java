@@ -6,6 +6,6 @@ public class ChangeError extends OSRDException {
     private static final long serialVersionUID = 9023813991609794335L;
 
     public ChangeError(String message) {
-        super(changeCode, message, ErrorCause.INTERNAL);
+        super(message, ErrorCause.INTERNAL);
     }
 }

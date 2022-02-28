@@ -17,7 +17,7 @@ public class MarecoConvergenceException extends OSRDException {
             MarecoAllowance allowance,
             String marecoErrorType
     ) {
-        super(marecoConvergenceCode, message, cause);
+        super(message, cause);
         this.allowanceIndex = allowance.allowanceIndex;
         this.marecoErrorType = marecoErrorType;
         this.begin = allowance.sectionBegin;

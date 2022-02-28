@@ -3,10 +3,10 @@ package fr.sncf.osrd.railjson.parser.exceptions;
 import fr.sncf.osrd.OSRDException;
 
 public class InvalidRollingStock extends OSRDException {
-    private static final long serialVersionUID = -7902941815959834009L;
+    private static final long serialVersionUID = -8380552148316200567L;
 
     public InvalidRollingStock(String message) {
-        super(invalidRollingStockCode, message, ErrorCause.USER);
+        super(message, ErrorCause.USER);
     }
 
     public InvalidRollingStock() {
@@ -14,6 +14,6 @@ public class InvalidRollingStock extends OSRDException {
     }
 
     protected InvalidRollingStock(String code, String message) {
-        super(code, message, ErrorCause.USER);
+        super(message, ErrorCause.USER);
     }
 }

@@ -3,10 +3,10 @@ package fr.sncf.osrd.railjson.parser.exceptions;
 import fr.sncf.osrd.OSRDException;
 
 public class InvalidSuccession extends OSRDException {
-    private static final long serialVersionUID = -4629780236669835265L;
+    private static final long serialVersionUID = -3695562224328844732L;
 
     public InvalidSuccession(String message) {
-        super(invalidSuccessionCode, message, ErrorCause.USER);
+        super(message, ErrorCause.USER);
     }
 
     public InvalidSuccession() {
@@ -14,6 +14,6 @@ public class InvalidSuccession extends OSRDException {
     }
 
     protected InvalidSuccession(String code, String message) {
-        super(code, message, ErrorCause.USER);
+        super(message, ErrorCause.USER);
     }
 }
